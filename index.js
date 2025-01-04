@@ -8,12 +8,10 @@ dotenv.config();
 DBcon();
 const PORT=process.env.PORT;
 const app=express();
+app.use(express.json())
+
 
 app.use('/auth',AuthRouter)
-
-
-
-
 
 
 

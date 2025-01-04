@@ -11,11 +11,17 @@ const userSchema=new mongoose.Schema({
         requierd:true,
     },
     password:{
-        typw:String,
+        type:String,
         requierd:true,
     },
     isVerified:{
         type:Boolean,
         default:false,
-    }
-})
+    },
+    verificationCode:{
+        type:String,
+    },
+},{timestamps:true});
+
+const UserModel=mongoose.model("User",userSchema);
+export default UserModel;
