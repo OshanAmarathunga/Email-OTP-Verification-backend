@@ -1,20 +1,20 @@
 import nodemailer from "nodemailer";
 
-const transporter = nodemailer.createTransport({
+export const transporter = nodemailer.createTransport({
   host: "smtp.gmail.com",
   port: 587,
   secure: false, // true for port 465, false for other ports
   auth: {
-    user: "maddison53@ethereal.email",
-    pass: "jn7jnAPss4f63QBp6D",
+    user: "oooshan94@email.com",
+    pass: "ajoi djor ntsa jmkv",
   },
 });
 
 const sendEmail = async ()=>{
     try{
         const info = await transporter.sendMail({
-            from: '"Maddison Foo Koch 👻" <maddison53@ethereal.email>', // sender address
-            to: "bar@example.com, baz@example.com", // list of receivers
+            from: '"Code by oshan 👻" <oooshan94@gmail.com>', // sender address
+            to: "oshanamarathunga1@gmail.com", // list of receivers
             subject: "Hello ✔", // Subject line
             text: "Hello world?", // plain text body
             html: "<b>Hello world?</b>", // html body
@@ -26,4 +26,4 @@ const sendEmail = async ()=>{
     }
 }
 
-sendEmail();
+export default sendEmail;

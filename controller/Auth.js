@@ -1,3 +1,4 @@
+import sendEmail from "../middleware/EmailConfig.js";
 import UserModel from "../models/User.js";
 import bcrypt from "bcryptjs";
 const register=async(req,res)=>{
@@ -12,6 +13,7 @@ const register=async(req,res)=>{
         if(existingUser){
             return res.status(400).json({
                 message:"User already exists, Please Login",
+                sendEmail
             })
         }
 
