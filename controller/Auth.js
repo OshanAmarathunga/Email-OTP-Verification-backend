@@ -1,7 +1,7 @@
-import { sendVerificationCode } from "../middleware/Email.js";
+import { sendVerificationCode, welcomeEmail } from "../middleware/Email.js";
 import UserModel from "../models/User.js";
 import bcrypt from "bcryptjs";
-const register=async(req,res)=>{
+export const register=async(req,res)=>{
     try{
         const {email,password,name}=req.body;
         if(!email || !password || !name){
@@ -37,4 +37,31 @@ const register=async(req,res)=>{
     }
 }
 
-export default register;
+
+export const verifyEmail=async(req,res)=>{
+    try{
+        const code=req.body.code;
+        
+        const user=await UserModel.findOne({
+            verificationCode:code
+        });
+
+        if(!user){
+            return res.status(400).json({
+                message:"Invalid verification code",
+            })
+        }
+
+        user.isVerified=true; 
+        user.verificationCode=undefined;
+
+        await user.save();
+        await welcomeEmail(user.email,user.name);
+        return res.status(200).json({
+            message:"Email verified successfully",
+        })
+
+    }catch(err){
+        console.log(err);
+    }
+}
