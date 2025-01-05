@@ -1,4 +1,4 @@
-import sendEmail from "../middleware/EmailConfig.js";
+import { sendVerificationCode } from "../middleware/Email.js";
 import UserModel from "../models/User.js";
 import bcrypt from "bcryptjs";
 const register=async(req,res)=>{
@@ -13,7 +13,7 @@ const register=async(req,res)=>{
         if(existingUser){
             return res.status(400).json({
                 message:"User already exists, Please Login",
-                sendEmail
+                
             })
         }
 
@@ -26,6 +26,8 @@ const register=async(req,res)=>{
             verificationCode,
         })
         await user.save();
+        
+        sendVerificationCode(user.email,verificationCode); 
         return res.status(200).json({
             message:"User registered successfully",user,
         })
