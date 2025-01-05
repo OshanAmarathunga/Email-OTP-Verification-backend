@@ -10,7 +10,7 @@ export const sendVerificationCode = async (email, verificationCode) => {
                 text: "verify your email with this otp"+ verificationCode, // plain text body
                 html: Verification_Email_Template.replace("{verificationCode}",verificationCode), // html body
               });
-              console.log("Email send successfully",response);
+              console.log("Email send successfully");
   } catch (error) {
     console.log("Email error",error);
     
@@ -26,7 +26,7 @@ export const welcomeEmail = async (email, name) => {
                 text: "", // plain text body
                 html: Welcome_Email_Template.replace("{name}",name), // html body
               });
-              console.log("Email send successfully",response);
+              console.log("Email send successfully");
   } catch (error) {
     console.log("Email error",error);
     
