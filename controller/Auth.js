@@ -49,10 +49,20 @@ export const verifyEmail = async (req, res) => {
 
     if (!user) {
       return res.status(400).json({
-        message: "Invalid user code",
+        message: "Invalid user email",
       });
     }
-    if (user.verificationCode === code) {
+   
+    
+    if (user.isVerified) {
+      console.log("User isVerified status:", user.isVerified); 
+      return res.status(200).json({
+        message: "User is already verified",
+      });
+    }
+
+
+    if (user.verificationCode == code) {
       user.isVerified = true;
 
       await user.save();
@@ -60,10 +70,10 @@ export const verifyEmail = async (req, res) => {
       return res.status(200).json({
         message: "Email verified successfully",
       });
-    }else{
+    } else {
       return res.status(200).json({
-        message:"Invalid verification code!"
-      })
+        message: "Invalid verification code!",
+      });
     }
   } catch (err) {
     console.log(err);
@@ -75,21 +85,22 @@ export const resendVerificationCode = async (req, res) => {
     const email = req.body.email;
     const user = await UserModel.findOne({ email: email });
 
-    if(!user){
+    if (!user) {
       return res.status(400).json({
-        message: "User not found, Please register first!"
-      })
+        message: "User not found, Please register first!",
+      });
     }
 
-    const newVerificationCode=Math.floor(100000+Math.random()*900000).toString();
-    user.verificationCode=newVerificationCode;
+    const newVerificationCode = Math.floor(
+      100000 + Math.random() * 900000
+    ).toString();
+    user.verificationCode = newVerificationCode;
 
     await user.save();
-    sendVerificationCode(user.email,newVerificationCode);
+    sendVerificationCode(user.email, newVerificationCode);
     return res.status(200).json({
-      message:"New verification code sent successfully"
-    })
-
+      message: "New verification code sent successfully",
+    });
   } catch (erro) {
     console.log(err);
   }
