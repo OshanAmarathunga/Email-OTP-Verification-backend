@@ -47,7 +47,7 @@ export const verifyEmail = async (req, res) => {
       email: email,
     });
 
-    if (!user) {
+    if (!user) { // check user validity
       return res.status(400).json({
         message: "Invalid user email",
       });
